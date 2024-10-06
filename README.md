@@ -1,16 +1,24 @@
-# myfinance
+# ArtoKuApp
 
-A new Flutter project.
+<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/canva.jpg?raw=true" alt="alt" width="700"/>
 
-## Getting Started
+Dengan aplikasi ini, akan lebih mudah mengelola keuangan, dan mencapai tujuan keuangan Anda.
 
-This project is a starting point for a Flutter application.
+## Technology
 
-A few resources to get you started if this is your first Flutter project:
+- FrontEnd Mobile : [Flutter](https://docs.flutter.dev/get-started/codelab)
+- BackEnd : [Firebase](https://firebase.google.com/)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Tutorial Install Source Code
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Link tutorial : [Sedap Gaming](https://youtu.be/4tpJdfgY9OM)
+
+## Screen
+
+<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/1.jpg?raw=true" alt="alt" width="400"/>
+<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/2.jpg?raw=true" alt="alt" width="400"/>
+<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/3.jpg?raw=true" alt="alt" width="400"/>
+<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/4.jpg?raw=true" alt="alt" width="400"/>
+<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/5.jpg?raw=true" alt="alt" width="400"/>
+<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/6.jpg?raw=true" alt="alt" width="400"/>
+<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/7.jpg?raw=true" alt="alt" width="400"/>

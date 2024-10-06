@@ -155,7 +155,7 @@ class _LoginViewState extends State<LoginView> {
                     text: state is AuthLoading ? 'Loading' : 'Login',
                     styleText: Theme.of(context).primaryTextTheme.displayMedium,
                   ),
-                  SizedBox(height: GlobalVariable.deviceHeight(context) - 560),
+                  SizedBox(height: GlobalVariable.deviceHeight(context) - 550),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.center,

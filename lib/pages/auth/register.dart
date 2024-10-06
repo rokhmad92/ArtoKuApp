@@ -189,7 +189,7 @@ class _RegisterViewState extends State<RegisterView> {
                   SizedBox(
                       height: GlobalVariable.deviceHeight(context) <= 720
                           ? GlobalVariable.deviceHeight(context) - 650
-                          : GlobalVariable.deviceHeight(context) - 690),
+                          : GlobalVariable.deviceHeight(context) - 680),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.center,
