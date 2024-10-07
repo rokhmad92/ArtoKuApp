@@ -1,8 +1,10 @@
 # ArtoKuApp
 
-<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/canva.jpg?raw=true" alt="alt" width="700"/>
+<img src="https://github.com/rokhmad92/ArtoKuAppM/blob/master/assets/screen/canva.jpg?raw=true" alt="alt" width="700"/>
 
 Dengan aplikasi ini, akan lebih mudah mengelola keuangan, dan mencapai tujuan keuangan Anda.
+
+<img src="https://visitor-badge.laobi.icu/badge?page_id=rokhmad92.ArtoKuApp"/>
 
 ## Technology
 
@@ -13,12 +15,12 @@ Dengan aplikasi ini, akan lebih mudah mengelola keuangan, dan mencapai tujuan ke
 
 - Link tutorial : [Sedap Gaming](https://youtu.be/4tpJdfgY9OM)
 
-## Screen
+## Preview
 
-<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/1.jpg?raw=true" alt="alt" width="400"/>
-<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/2.jpg?raw=true" alt="alt" width="400"/>
-<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/3.jpg?raw=true" alt="alt" width="400"/>
-<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/4.jpg?raw=true" alt="alt" width="400"/>
-<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/5.jpg?raw=true" alt="alt" width="400"/>
-<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/6.jpg?raw=true" alt="alt" width="400"/>
-<img src="https://github.com/rokhmad92/ArtoKuApp/blob/master/assets/screen/7.jpg?raw=true" alt="alt" width="400"/>
+![SplashScreen](assets/screen/1.jpg)
+![Login](assets/screen/2.jpg)
+![Register](assets/screen/3.jpg)
+![Home](assets/screen/4.jpg)
+![input](assets/screen/5.jpg)
+![Laporan](assets/screen/6.jpg)
+![Category](assets/screen/7.jpg)
