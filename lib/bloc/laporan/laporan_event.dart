@@ -47,9 +47,15 @@ class DestroyDateLaporanEvent extends LaporanEvent {
 }
 
 class SumMonthNominalEvent extends LaporanEvent {
-  final DateTime date;
+  final DateTime? date;
+  final DateTime? startDate;
+  final DateTime? endDate;
 
-  SumMonthNominalEvent({required this.date});
+  SumMonthNominalEvent({
+    this.date,
+    this.startDate,
+    this.endDate,
+  });
 }
 
 class PieChartEvent extends LaporanEvent {

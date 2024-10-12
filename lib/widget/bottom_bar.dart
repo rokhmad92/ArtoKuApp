@@ -111,15 +111,16 @@ class _BottomBarViewState extends State<BottomBarView> {
                 )
               : null,
           bottomNavigationBar: NavigationBar(
-            indicatorColor: Colors.grey[300],
-            backgroundColor: Colors.grey[100],
-            height: 60,
+            indicatorColor: Colors.blue[100],
+            backgroundColor: const Color.fromRGBO(235, 241, 255, 1),
+            height: 70,
             selectedIndex: currentIndex,
             onDestinationSelected: (index) {
               setState(() {
                 currentIndex = index;
               });
             },
+            animationDuration: const Duration(milliseconds: 1000),
             destinations: const [
               NavigationDestination(
                 selectedIcon: Icon(

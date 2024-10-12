@@ -180,6 +180,7 @@ class _HomeState extends State<Home> {
                                 return ListView.builder(
                                   physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
+                                  padding: const EdgeInsets.symmetric(vertical: 18.0),
                                   itemCount: state.dataLaporan.length,
                                   itemBuilder: (context, index) {
                                     final data = state.dataLaporan[index];

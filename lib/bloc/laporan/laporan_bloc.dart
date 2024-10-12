@@ -131,18 +131,28 @@ class LaporanBloc extends Bloc<LaporanEvent, LaporanState> {
       (event, emit) async {
         emit(LaporanLoading());
 
+        DateTime startDate = DateTime.now();
+        DateTime endDate = DateTime.now();
+
         final String userId = await getIdUser();
-        final DateTime startDate =
-            DateTime(event.date.year, event.date.month, 1);
-        final DateTime endDate = DateTime(
-          startDate.year,
-          startDate.month + 1,
-          0, // Last day of the month
-          23, // Hour
-          59, // Minute
-          59, // Second
-          999, // Milliseconds
-        );
+        if (event.startDate != null && event.endDate != null) {
+          startDate = DateTime(event.startDate!.year, event.startDate!.month,
+              event.startDate!.day, 0, 0, 0, 0);
+          endDate = DateTime(event.endDate!.year, event.endDate!.month,
+              event.endDate!.day, 23, 59, 59, 999);
+        } else {
+          startDate = DateTime(event.date!.year, event.date!.month, 1);
+          endDate = DateTime(
+            startDate.year,
+            startDate.month + 1,
+            0, // Last day of the month
+            23, // Hour
+            59, // Minute
+            59, // Second
+            999, // Milliseconds
+          );
+        }
+
         final Timestamp startTimestamp = Timestamp.fromDate(startDate);
         final Timestamp endTimestamp = Timestamp.fromDate(endDate);
 
@@ -173,6 +183,8 @@ class LaporanBloc extends Bloc<LaporanEvent, LaporanState> {
             return data + (value is num ? value.toInt() : 0);
           });
 
+          int selisih = totalPemasukan - totalPengeluaran;
+
           final List<LaporanModel> pemasukanList = queryPemasukan.docs
               .map((item) => LaporanModel(
                   nominal: item['nominal'],
@@ -197,6 +209,7 @@ class LaporanBloc extends Bloc<LaporanEvent, LaporanState> {
           emit(LaporanSumCalculationState(
               pemasukan: totalPemasukan,
               pengeluaran: totalPengeluaran,
+              selisih: selisih,
               data: laporanData));
         } catch (e) {
           emit(LaporanError(message: e.toString()));

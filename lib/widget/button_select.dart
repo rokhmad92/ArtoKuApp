@@ -10,12 +10,14 @@ class ButtonSelect extends StatefulWidget {
       required this.options,
       this.getCategory,
       this.bloc1,
-      this.bloc2});
+      this.bloc2,
+      this.bloc3});
 
   final List<String> options;
   final bool? getCategory;
   final LaporanBloc? bloc1; // for pie chart
   final LaporanBloc? bloc2; // for get data laporan
+  final LaporanBloc? bloc3; // for get data laporan
 
   @override
   State<ButtonSelect> createState() => _ButtonSelectState();
@@ -75,6 +77,9 @@ class _ButtonSelectState extends State<ButtonSelect> {
                           widget.bloc2!.add(GetWhereDateLaporanEvent(
                               startDate: DateTime(now.year, now.month, 1),
                               endDate: DateTime(now.year, now.month + 1, 0)));
+                          widget.bloc3!.add(SumMonthNominalEvent(
+                              startDate: DateTime(now.year, now.month, 1),
+                              endDate: DateTime(now.year, now.month + 1, 0)));
                           break;
 
                         case 'Bulan lalu':
@@ -86,6 +91,10 @@ class _ButtonSelectState extends State<ButtonSelect> {
                           widget.bloc2!.add(GetWhereDateLaporanEvent(
                               startDate: DateTime(now.year, now.month - 1, 1),
                               endDate: DateTime(now.year, now.month, 0)));
+                          widget.bloc3!.add(SumMonthNominalEvent(
+                            startDate: DateTime(now.year, now.month - 1, 1),
+                            endDate: DateTime(now.year, now.month, 0),
+                          ));
                           break;
 
                         case '3 Bulan':
@@ -94,6 +103,10 @@ class _ButtonSelectState extends State<ButtonSelect> {
                                   DateTime(now.year, now.month - 3, now.day),
                               endDate: now));
                           widget.bloc2!.add(GetWhereDateLaporanEvent(
+                              startDate:
+                                  DateTime(now.year, now.month - 2, now.day),
+                              endDate: now));
+                          widget.bloc3!.add(SumMonthNominalEvent(
                               startDate:
                                   DateTime(now.year, now.month - 2, now.day),
                               endDate: now));

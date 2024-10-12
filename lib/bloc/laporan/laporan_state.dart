@@ -28,10 +28,11 @@ class LaporanError extends LaporanState {
 class LaporanSumCalculationState extends LaporanState {
   final int pemasukan;
   final int pengeluaran;
+  final int selisih;
   final List<LaporanModel> data;
 
   LaporanSumCalculationState(
-      {required this.pemasukan, required this.pengeluaran, required this.data});
+      {required this.pemasukan, required this.pengeluaran, required this.selisih, required this.data});
 }
 
 class LaporanPieChartState extends LaporanState {

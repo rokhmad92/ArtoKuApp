@@ -78,6 +78,7 @@ class _RegisterViewState extends State<RegisterView> {
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
+            height: GlobalVariable.deviceHeight(context),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -91,105 +92,110 @@ class _RegisterViewState extends State<RegisterView> {
             child: Form(
               key: _formKey,
               child: Column(
-                mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const SizedBox(height: 15.0),
-                  Center(
-                    child: Image.asset(
-                      'assets/register.png',
-                      width: GlobalVariable.deviceWidth(context) * 0.5,
-                      height: GlobalVariable.deviceWidth(context) * 0.5,
-                    ),
-                  ),
-                  Text(
-                    'Daftar Akun',
-                    style: Theme.of(context).primaryTextTheme.titleLarge,
-                  ),
-                  Text(
-                    'Daftar akun untuk bisa login ke aplikasi, lengkapi semua form tersebut.',
-                    style: Theme.of(context).primaryTextTheme.titleSmall,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  FormText(
-                    labelText: "Email",
-                    hintText: "Masukkan Email anda",
-                    controller: _emailController,
-                    prefixIcon: const Icon(Icons.email),
-                    backgroundColor: Colors.white,
-                    borderFocusColor: Colors.blue,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  FormNumber(
-                    labelText: "No Hp",
-                    hintText: "Masukkan No Hp anda",
-                    controller: _phoneController,
-                    prefixIcon: const Icon(Icons.phone),
-                    backgroundColor: Colors.white,
-                    borderFocusColor: Colors.blue,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  FormText(
-                    labelText: "Nama",
-                    hintText: "Masukkan nama anda",
-                    controller: _nameController,
-                    prefixIcon: const Icon(Icons.person),
-                    backgroundColor: Colors.white,
-                    borderFocusColor: Colors.blue,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  FormText(
-                    labelText: "Password",
-                    hintText: "Masukkan password anda",
-                    controller: _passController,
-                    inputActionDone: true,
-                    textKapital: false,
-                    prefixIcon: const Icon(Icons.password),
-                    backgroundColor: Colors.white,
-                    borderFocusColor: Colors.blue,
-                    obscureText: _obscureText,
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _obscureText = !_obscureText;
-                        });
-                      },
-                      child: Icon(
-                        _obscureText ? Icons.visibility : Icons.visibility_off,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 15.0),
+                      Center(
+                        child: Image.asset(
+                          'assets/register.png',
+                          width: GlobalVariable.deviceWidth(context) * 0.5,
+                          height: GlobalVariable.deviceWidth(context) * 0.5,
+                        ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ButtonElevated(
-                    onPress: () {
-                      if (_formKey.currentState!.validate()) {
-                        UserModel user = UserModel(
-                          email: _emailController.text,
-                          name: _nameController.text,
-                          phone: _phoneController.text,
-                          password: _passController.text,
-                        );
+                      Text(
+                        'Daftar Akun',
+                        style: Theme.of(context).primaryTextTheme.titleLarge,
+                      ),
+                      Text(
+                        'Daftar akun untuk bisa login ke aplikasi, lengkapi semua form tersebut.',
+                        style: Theme.of(context).primaryTextTheme.titleSmall,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      FormText(
+                        labelText: "Email",
+                        hintText: "Masukkan Email anda",
+                        controller: _emailController,
+                        prefixIcon: const Icon(Icons.email),
+                        backgroundColor: Colors.white,
+                        borderFocusColor: Colors.blue,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      FormNumber(
+                        labelText: "No Hp",
+                        hintText: "Masukkan No Hp anda",
+                        controller: _phoneController,
+                        prefixIcon: const Icon(Icons.phone),
+                        backgroundColor: Colors.white,
+                        borderFocusColor: Colors.blue,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      FormText(
+                        labelText: "Nama",
+                        hintText: "Masukkan nama anda",
+                        controller: _nameController,
+                        prefixIcon: const Icon(Icons.person),
+                        backgroundColor: Colors.white,
+                        borderFocusColor: Colors.blue,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      FormText(
+                        labelText: "Password",
+                        hintText: "Masukkan password anda",
+                        controller: _passController,
+                        inputActionDone: true,
+                        textKapital: false,
+                        prefixIcon: const Icon(Icons.password),
+                        backgroundColor: Colors.white,
+                        borderFocusColor: Colors.blue,
+                        obscureText: _obscureText,
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                          child: Icon(
+                            _obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ButtonElevated(
+                        onPress: () {
+                          if (_formKey.currentState!.validate()) {
+                            UserModel user = UserModel(
+                              email: _emailController.text,
+                              name: _nameController.text,
+                              phone: _phoneController.text,
+                              password: _passController.text,
+                            );
 
-                        authBloc.add(SignupEvent(user: user));
-                      }
-                    },
-                    text: 'Daftar',
-                    styleText: Theme.of(context).primaryTextTheme.displayMedium,
+                            authBloc.add(SignupEvent(user: user));
+                          }
+                        },
+                        text: state is AuthLoading ? 'Loading' : 'Daftar',
+                        styleText:
+                            Theme.of(context).primaryTextTheme.displayMedium,
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                      height: GlobalVariable.deviceHeight(context) <= 720
-                          ? GlobalVariable.deviceHeight(context) - 650
-                          : GlobalVariable.deviceHeight(context) - 680),
+                  const Spacer(),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.center,
