@@ -13,6 +13,20 @@ class MyPieChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Color> distinctColors = [
+      Colors.blue,
+      Colors.green,
+      Colors.orange,
+      Colors.red,
+      Colors.purple,
+      Colors.teal,
+      Colors.indigo,
+      Colors.cyan,
+      Colors.brown,
+      Colors.pink,
+      Colors.lime,
+    ];
+
     return BlocConsumer<LaporanBloc, LaporanState>(
       bloc: bloc,
       listener: (context, state) {},
@@ -32,9 +46,13 @@ class MyPieChart extends StatelessWidget {
                       sectionsSpace: 5,
                       sections: state.dataChart.asMap().entries.map((entry) {
                         final item = entry.value;
+                        final index = entry.key;
+                        final color =
+                            distinctColors[index % distinctColors.length];
+
                         return PieChartSectionData(
                           value: item['value'].toDouble(),
-                          color: item['color'],
+                          color: color,
                           title: '${item['value']}%',
                           titleStyle: const TextStyle(color: Colors.white),
                           showTitle: true,
@@ -50,8 +68,9 @@ class MyPieChart extends StatelessWidget {
                   runSpacing: 8.0,
                   children: state.dataChart.asMap().entries.map((entry) {
                     final item = entry.value;
-                    return _buildLegend(
-                        color: item['color'], text: item['title']);
+                    final index = entry.key;
+                    final color = distinctColors[index % distinctColors.length];
+                    return _buildLegend(color: color, text: item['title']);
                   }).toList(),
                 ),
               ),

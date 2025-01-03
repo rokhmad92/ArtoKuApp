@@ -42,8 +42,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final DateTime firstYear = DateTime(_today.year - 1, 1, 1);
-    final DateTime lastYear = DateTime(_today.year + 1, 12, 31);
+    final DateTime firstYear = DateTime(DateTime.now().year - 1, 1, 1);
+    final DateTime lastYear = DateTime(DateTime.now().year + 1, 12, 31);
     final List<Widget> skeletonLoaders = List.generate(
       6,
       (index) => const Skeletonizer(
@@ -71,64 +71,79 @@ class _HomeState extends State<Home> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     BlocBuilder<LaporanBloc, LaporanState>(
-                      bloc: bloc2,
-                      builder: (context, state) {
-                        return TableCalendar(
-                          firstDay: firstYear,
-                          lastDay: lastYear,
-                          focusedDay: _today,
-                          headerStyle: const HeaderStyle(
-                            formatButtonVisible: false,
-                            titleCentered: true,
-                          ),
-                          selectedDayPredicate: (day) =>
-                              isSameDay(_selectedDay, day),
-                          eventLoader: (day) => listOfDayEvents(day, state),
-                          onPageChanged: (focusedDay) {
-                            setState(() {
-                              _today = focusedDay;
-                            });
-                            bloc2.add(SumMonthNominalEvent(date: focusedDay));
-                          },
-                          onDaySelected: (selectedDay, focusedDay) {
-                            if (!isSameDay(_selectedDay, selectedDay)) {
+                        bloc: bloc2,
+                        builder: (context, state) {
+                          return TableCalendar(
+                            firstDay: firstYear,
+                            lastDay: lastYear,
+                            focusedDay: _today,
+                            headerStyle: const HeaderStyle(
+                              formatButtonVisible: false,
+                              titleCentered: true,
+                            ),
+                            selectedDayPredicate: (day) {
+                              return isSameDay(_selectedDay, day);
+                            },
+                            eventLoader: (day) => listOfDayEvents(day, state),
+                            onPageChanged: (focusedDay) {
                               setState(() {
-                                _selectedDay = selectedDay;
                                 _today = focusedDay;
                               });
-                              bloc1.add(GetWhereDateLaporanEvent(
+                              bloc2.add(SumMonthNominalEvent(date: focusedDay));
+                            },
+                            onDaySelected: (selectedDay, focusedDay) {
+                              // if (selectedDay.year != _today.year) {
+                              //   selectedDay = DateTime(
+                              //     _today.year, // Gunakan tahun dari _today
+                              //     selectedDay.month,
+                              //     selectedDay.day,
+                              //     selectedDay.hour,
+                              //     selectedDay.minute,
+                              //     selectedDay.second,
+                              //     selectedDay.millisecond,
+                              //     selectedDay.microsecond,
+                              //   );
+                              // }
+
+                              if (!isSameDay(_selectedDay, selectedDay)) {
+                                setState(() {
+                                  _selectedDay = selectedDay;
+                                  _today = focusedDay;
+                                });
+
+                                bloc1.add(GetWhereDateLaporanEvent(
                                   startDate: selectedDay,
-                                  endDate: selectedDay));
-                            }
-                          },
-                          calendarBuilders: CalendarBuilders(
-                            dowBuilder: (context, day) {
-                              if (day.weekday == DateTime.sunday) {
-                                final text = DateFormat.E().format(day);
-                                return Center(
-                                  child: Text(
-                                    text,
-                                    style: const TextStyle(color: Colors.red),
-                                  ),
-                                );
+                                  endDate: selectedDay,
+                                ));
                               }
-                              return null;
                             },
-                            defaultBuilder: (context, day, focusedDay) {
-                              if (day.weekday == DateTime.sunday) {
-                                return Center(
-                                  child: Text(
-                                    '${day.day}',
-                                    style: const TextStyle(color: Colors.red),
-                                  ),
-                                );
-                              }
-                              return null;
-                            },
-                          ),
-                        );
-                      },
-                    ),
+                            calendarBuilders: CalendarBuilders(
+                              dowBuilder: (context, day) {
+                                if (day.weekday == DateTime.sunday) {
+                                  final text = DateFormat.E().format(day);
+                                  return Center(
+                                    child: Text(
+                                      text,
+                                      style: const TextStyle(color: Colors.red),
+                                    ),
+                                  );
+                                }
+                                return null;
+                              },
+                              defaultBuilder: (context, day, focusedDay) {
+                                if (day.weekday == DateTime.sunday) {
+                                  return Center(
+                                    child: Text(
+                                      '${day.day}',
+                                      style: const TextStyle(color: Colors.red),
+                                    ),
+                                  );
+                                }
+                                return null;
+                              },
+                            ),
+                          );
+                        }),
                     const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -180,7 +195,8 @@ class _HomeState extends State<Home> {
                                 return ListView.builder(
                                   physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
-                                  padding: const EdgeInsets.symmetric(vertical: 18.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 18.0),
                                   itemCount: state.dataLaporan.length,
                                   itemBuilder: (context, index) {
                                     final data = state.dataLaporan[index];

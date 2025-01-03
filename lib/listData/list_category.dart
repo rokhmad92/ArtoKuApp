@@ -25,6 +25,16 @@ class ListCategory extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    'showCategory',
+                    arguments: {'name': name},
+                  );
+                },
+                icon: const Icon(Icons.remove_red_eye_outlined),
+              ),
+              IconButton(
+                onPressed: () {
                   DialogWidget.editCategory(context, uid, name, category);
                 },
                 icon: const Icon(Icons.edit_outlined),

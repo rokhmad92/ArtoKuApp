@@ -1,3 +1,4 @@
+import 'package:artoku/pages/show_category.dart';
 import 'package:flutter/material.dart';
 import 'package:artoku/pages/auth/login.dart';
 import 'package:artoku/pages/auth/register.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         'register': (context) => const Register(),
         'userPage': (context) => const BottomBar(),
         'reconnect': (context) => const Reconnect(),
+        'showCategory': (context) => ShowCategory(),
       },
     );
   }

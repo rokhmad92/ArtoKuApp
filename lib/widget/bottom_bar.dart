@@ -73,7 +73,7 @@ class _BottomBarViewState extends State<BottomBarView> {
 
       return PopScope(
         canPop: canPopNow,
-        onPopInvokedWithResult: (didPop, dynamic) {
+        onPopInvoked: (didPop) {
           final now = DateTime.now();
           if (currentBackPressTime == null ||
               now.difference(currentBackPressTime!) >

@@ -7,10 +7,12 @@ sealed class LaporanEvent {}
 class GetLaporanEvent extends LaporanEvent {}
 
 class GetWhereDateLaporanEvent extends LaporanEvent {
+  final String? nameCategory;
   final DateTime startDate;
   final DateTime endDate;
 
   GetWhereDateLaporanEvent({
+    this.nameCategory,
     required this.startDate,
     required this.endDate,
   });
@@ -47,11 +49,13 @@ class DestroyDateLaporanEvent extends LaporanEvent {
 }
 
 class SumMonthNominalEvent extends LaporanEvent {
+  final String? nameCategory;
   final DateTime? date;
   final DateTime? startDate;
   final DateTime? endDate;
 
   SumMonthNominalEvent({
+    this.nameCategory,
     this.date,
     this.startDate,
     this.endDate,

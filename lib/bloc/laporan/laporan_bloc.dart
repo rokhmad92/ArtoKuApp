@@ -65,13 +65,22 @@ class LaporanBloc extends Bloc<LaporanEvent, LaporanState> {
       (event, emit) async {
         emit(LaporanLoading());
 
+        final String? nameCategory = event.nameCategory;
         final DateTime startDay = DateTime(event.startDate.year,
             event.startDate.month, event.startDate.day, 0, 0, 0, 0);
         final DateTime endDay = DateTime(event.endDate.year,
             event.endDate.month, event.endDate.day, 23, 59, 59, 999);
 
+        // print(startDay);
+        // print(endDay);
+
         try {
-          await _getWhereDateLaporan(startDay, endDay, emit);
+          await _getWhereDateLaporan(
+            startDay: startDay,
+            endDay: endDay,
+            emit: emit,
+            nameCategory: nameCategory,
+          );
         } catch (e) {
           emit(LaporanError(message: e.toString()));
         }
@@ -99,7 +108,8 @@ class LaporanBloc extends Bloc<LaporanEvent, LaporanState> {
           await getData.update(
               {"keterangan": event.keterangan, "nominal": event.nominal});
           emit(LaporanSuccess(message: 'Berhasil update laporan'));
-          await _getWhereDateLaporan(startDay, endDay, emit);
+          await _getWhereDateLaporan(
+              startDay: startDay, endDay: endDay, emit: emit);
         } catch (e) {
           emit(LaporanError(message: e.toString()));
         }
@@ -119,7 +129,8 @@ class LaporanBloc extends Bloc<LaporanEvent, LaporanState> {
           db.collection("laporan").doc(event.uid).delete();
 
           emit(LaporanSuccess(message: 'Berhasil hapus data'));
-          await _getWhereDateLaporan(startDay, endDay, emit);
+          await _getWhereDateLaporan(
+              startDay: startDay, endDay: endDay, emit: emit);
         } catch (e) {
           emit(LaporanError(message: e.toString()));
         }
@@ -157,21 +168,33 @@ class LaporanBloc extends Bloc<LaporanEvent, LaporanState> {
         final Timestamp endTimestamp = Timestamp.fromDate(endDate);
 
         try {
-          QuerySnapshot queryPemasukan = await db
+          var subQueryPemasukan = db
               .collection('laporan')
               .where('userId', isEqualTo: userId)
               .where('categoryTipe', isEqualTo: 'Pemasukan')
               .where('tanggal', isGreaterThanOrEqualTo: startTimestamp)
-              .where('tanggal', isLessThan: endTimestamp)
-              .get();
+              .where('tanggal', isLessThan: endTimestamp);
 
-          QuerySnapshot queryPengeluaran = await db
+          if (event.nameCategory != null) {
+            subQueryPemasukan = subQueryPemasukan.where('categoryName',
+                isEqualTo: event.nameCategory);
+          }
+
+          QuerySnapshot queryPemasukan = await subQueryPemasukan.get();
+
+          var subQueryPengeluaran = db
               .collection('laporan')
               .where('userId', isEqualTo: userId)
               .where('categoryTipe', isEqualTo: 'Pengeluaran')
               .where('tanggal', isGreaterThanOrEqualTo: startTimestamp)
-              .where('tanggal', isLessThan: endTimestamp)
-              .get();
+              .where('tanggal', isLessThan: endTimestamp);
+
+          if (event.nameCategory != null) {
+            subQueryPengeluaran = subQueryPengeluaran.where('categoryName',
+                isEqualTo: event.nameCategory);
+          }
+
+          QuerySnapshot queryPengeluaran = await subQueryPengeluaran.get();
 
           int totalPemasukan = queryPemasukan.docs.fold(0, (data, doc) {
             final value = (doc.data() as Map<String, dynamic>)['nominal'] ?? 0;
@@ -183,7 +206,13 @@ class LaporanBloc extends Bloc<LaporanEvent, LaporanState> {
             return data + (value is num ? value.toInt() : 0);
           });
 
-          int selisih = totalPemasukan - totalPengeluaran;
+          int selisih = 0;
+
+          if (event.nameCategory != null) {
+            selisih = totalPemasukan + totalPengeluaran;
+          } else {
+            selisih = totalPemasukan - totalPengeluaran;
+          }
 
           final List<LaporanModel> pemasukanList = queryPemasukan.docs
               .map((item) => LaporanModel(
@@ -290,20 +319,31 @@ class LaporanBloc extends Bloc<LaporanEvent, LaporanState> {
     return prefs.getString('uid') ?? '';
   }
 
-  Future<void> _getWhereDateLaporan(
-      DateTime startDay, DateTime endDay, Emitter<LaporanState> emit) async {
+  Future<void> _getWhereDateLaporan({
+    required DateTime startDay,
+    required DateTime endDay,
+    required Emitter<LaporanState> emit,
+    String? nameCategory,
+  }) async {
     final String userId = await getIdUser();
+
     final Timestamp startTimestamp = Timestamp.fromDate(startDay);
     final Timestamp endTimestamp = Timestamp.fromDate(endDay);
 
     try {
-      final QuerySnapshot getLaporan = await db
+      var query = db
           .collection('laporan')
           .where('tanggal', isGreaterThanOrEqualTo: startTimestamp)
           .where('tanggal', isLessThanOrEqualTo: endTimestamp)
-          .where('userId', isEqualTo: userId)
-          .orderBy('createdAt', descending: true)
-          .get();
+          .where('userId', isEqualTo: userId);
+
+      if (nameCategory != null && nameCategory.isNotEmpty) {
+        query = query.where('categoryName', isEqualTo: nameCategory);
+      }
+
+      // Execute the query
+      final QuerySnapshot getLaporan =
+          await query.orderBy('createdAt', descending: true).get();
 
       final result = getLaporan.docs
           .map((data) => LaporanModel(
@@ -316,6 +356,8 @@ class LaporanBloc extends Bloc<LaporanEvent, LaporanState> {
                 createdAt: (data['createdAt'] as Timestamp).toDate(),
               ))
           .toList();
+
+      print(result);
 
       emit(LaporanLoaded(dataLaporan: result));
     } catch (e) {

@@ -56,7 +56,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         return;
       }
 
-      if (queryCount.count! >= 6) {
+      if (queryCount.count! >= 10) {
         emit(CategoryError(message: 'Jumlah kategori sudah mencapai batas.'));
         await _loadCategories(event.model.category.toString(), emit);
         return;

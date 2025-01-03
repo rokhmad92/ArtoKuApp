@@ -23,4 +23,5 @@ Dengan aplikasi ini, akan lebih mudah mengelola keuangan, dan mencapai tujuan ke
 ![Home](assets/screen/4.jpg)
 ![input](assets/screen/5.jpg)
 ![Laporan](assets/screen/6.jpg)
-![Category](assets/screen/7.jpg)
+![Category](assets/screen/8.jpg)
+![Show Detail Category](assets/screen/9.jpg)

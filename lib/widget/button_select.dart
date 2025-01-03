@@ -11,10 +11,13 @@ class ButtonSelect extends StatefulWidget {
       this.getCategory,
       this.bloc1,
       this.bloc2,
-      this.bloc3});
+      this.bloc3,
+      this.nameCategory});
 
   final List<String> options;
   final bool? getCategory;
+  final String? nameCategory; // for get data laporan by category
+
   final LaporanBloc? bloc1; // for pie chart
   final LaporanBloc? bloc2; // for get data laporan
   final LaporanBloc? bloc3; // for get data laporan
@@ -69,47 +72,74 @@ class _ButtonSelectState extends State<ButtonSelect> {
                     }
 
                     // pieChart
-                    if (widget.bloc1 != null && widget.bloc2 != null) {
+                    if (widget.bloc1 != null ||
+                        widget.bloc2 != null ||
+                        widget.bloc3 != null) {
                       final DateTime now = DateTime.now();
                       switch (option) {
                         case 'Bulan ini':
-                          widget.bloc1!.add(PieChartEvent(endDate: now));
-                          widget.bloc2!.add(GetWhereDateLaporanEvent(
-                              startDate: DateTime(now.year, now.month, 1),
-                              endDate: DateTime(now.year, now.month + 1, 0)));
-                          widget.bloc3!.add(SumMonthNominalEvent(
-                              startDate: DateTime(now.year, now.month, 1),
-                              endDate: DateTime(now.year, now.month + 1, 0)));
+                          if (widget.bloc1 != null) {
+                            widget.bloc1!.add(PieChartEvent(endDate: now));
+                          }
+
+                          if (widget.bloc2 != null) {
+                            widget.bloc2!.add(GetWhereDateLaporanEvent(
+                                nameCategory: widget.nameCategory,
+                                startDate: DateTime(now.year, now.month, 1),
+                                endDate: DateTime(now.year, now.month + 1, 0)));
+                          }
+                          if (widget.bloc3 != null) {
+                            widget.bloc3!.add(SumMonthNominalEvent(
+                                nameCategory: widget.nameCategory,
+                                startDate: DateTime(now.year, now.month, 1),
+                                endDate: DateTime(now.year, now.month + 1, 0)));
+                          }
                           break;
 
                         case 'Bulan lalu':
-                          widget.bloc1!.add(PieChartEvent(
-                              startDate:
-                                  DateTime(now.year, now.month - 1, now.day),
-                              endDate:
-                                  DateTime(now.year, now.month - 1, now.day)));
-                          widget.bloc2!.add(GetWhereDateLaporanEvent(
+                          if (widget.bloc1 != null) {
+                            widget.bloc1!.add(PieChartEvent(
+                                startDate:
+                                    DateTime(now.year, now.month - 1, now.day),
+                                endDate: DateTime(
+                                    now.year, now.month - 1, now.day)));
+                          }
+                          if (widget.bloc2 != null) {
+                            widget.bloc2!.add(GetWhereDateLaporanEvent(
+                                nameCategory: widget.nameCategory,
+                                startDate: DateTime(now.year, now.month - 1, 1),
+                                endDate: DateTime(now.year, now.month, 0)));
+                          }
+                          if (widget.bloc3 != null) {
+                            widget.bloc3!.add(SumMonthNominalEvent(
+                              nameCategory: widget.nameCategory,
                               startDate: DateTime(now.year, now.month - 1, 1),
-                              endDate: DateTime(now.year, now.month, 0)));
-                          widget.bloc3!.add(SumMonthNominalEvent(
-                            startDate: DateTime(now.year, now.month - 1, 1),
-                            endDate: DateTime(now.year, now.month, 0),
-                          ));
+                              endDate: DateTime(now.year, now.month, 0),
+                            ));
+                          }
                           break;
 
                         case '3 Bulan':
-                          widget.bloc1!.add(PieChartEvent(
-                              startDate:
-                                  DateTime(now.year, now.month - 3, now.day),
-                              endDate: now));
-                          widget.bloc2!.add(GetWhereDateLaporanEvent(
-                              startDate:
-                                  DateTime(now.year, now.month - 2, now.day),
-                              endDate: now));
-                          widget.bloc3!.add(SumMonthNominalEvent(
-                              startDate:
-                                  DateTime(now.year, now.month - 2, now.day),
-                              endDate: now));
+                          if (widget.bloc1 != null) {
+                            widget.bloc1!.add(PieChartEvent(
+                                startDate:
+                                    DateTime(now.year, now.month - 3, now.day),
+                                endDate: now));
+                          }
+                          if (widget.bloc2 != null) {
+                            widget.bloc2!.add(GetWhereDateLaporanEvent(
+                                nameCategory: widget.nameCategory,
+                                startDate:
+                                    DateTime(now.year, now.month - 2, now.day),
+                                endDate: now));
+                          }
+                          if (widget.bloc3 != null) {
+                            widget.bloc3!.add(SumMonthNominalEvent(
+                                nameCategory: widget.nameCategory,
+                                startDate:
+                                    DateTime(now.year, now.month - 2, now.day),
+                                endDate: now));
+                          }
                           break;
                       }
                     }
